@@ -1,5 +1,5 @@
 
-class ItemsetCollection:
+class KCollection:
     """
     Class representing a set of item sets at each pass, k, of the algorithm.
     """
