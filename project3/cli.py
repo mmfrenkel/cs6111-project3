@@ -16,21 +16,21 @@ class AssociativeRulesCli(cli.Application):
         ["-d", "--dataset"],
         argtype=str,
         mandatory=False,
-        help="Specify .csv file for processing. By default: .csv"
+        help="Specify .csv file for processing. By default: .csv",
     )
 
     min_sup = cli.SwitchAttr(
         ["-s", "--minimum_support"],
         argtype=float,
         mandatory=True,
-        help="Specify a minimum support value (float, 0-1)"
+        help="Specify a minimum support value (float, 0-1)",
     )
 
     min_conf = cli.SwitchAttr(
         ["-c", "--minimum_confidence"],
         argtype=float,
         mandatory=True,
-        help="Specify a minimum confidence value (float, 0-1)"
+        help="Specify a minimum confidence value (float, 0-1)",
     )
 
     def main(self):
@@ -40,13 +40,9 @@ class AssociativeRulesCli(cli.Application):
         """
         data = self.open_csv_as_df()
 
-        miner = DataMiner(
-            data=data,
-            min_supp=self.min_sup,
-            min_conf=self.min_conf
-        )
+        miner = DataMiner(data=data, min_supp=self.min_sup, min_conf=self.min_conf)
 
-        item_sets = miner.compute_item_sets()
+        large_item_sets = miner.compute_item_sets()
 
     def open_csv_as_df(self):
         """
@@ -55,7 +51,9 @@ class AssociativeRulesCli(cli.Application):
         try:
             return pd.read_csv(self.file_path)
         except FileNotFoundError:
-            print("FileNotFound: Are you sure you provided the path to the .csv file correctly?")
+            print(
+                "FileNotFound: Are you sure you provided the path to the .csv file correctly?"
+            )
             exit(1)
 
     def report_itemsets(self, item_sets):
@@ -67,4 +65,3 @@ class AssociativeRulesCli(cli.Application):
 
 if __name__ == "__main__":
     AssociativeRulesCli.run()
-
