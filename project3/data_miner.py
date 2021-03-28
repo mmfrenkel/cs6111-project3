@@ -7,9 +7,7 @@ class DataMiner:
         self.data = data
         self.min_supp = min_supp
         self.min_conf = min_conf
-        self.n_baskets = len(
-            data
-        )  # number of "transactions" or "baskets" in the dataset
+        self.n_baskets = len(data)
 
     def compute_item_sets(self):
         """
@@ -17,18 +15,17 @@ class DataMiner:
         minimum confidence and support.
         :return: A dictionary of large item set to support, for all large itemsets identified
         """
-        large_itemsets = (
-            {}
-        )  # will contain a mapping of large itemsets to their count in data
+        # will contain a mapping of large itemsets to their count in data
+        large_itemsets = {}
 
         # this result represents the L1 = {large 1-itemsets}, stored in collection_1.large_itemsets
         collection_1 = self._do_first_pass()
 
-        # starting at k = 2, keep computing until we say stop
+        # starting at k = 2, keep computing until we run out of large itemsets
         k = 2
         last_collection = collection_1
         while last_collection.items:
-            # 1. add the prev large item sets to the global large item sets list
+            # 1. add the prev large item sets to the global large item results dictionary
             large_itemsets.update(last_collection.items)
 
             # 2. generate the candidates for round k
@@ -46,9 +43,10 @@ class DataMiner:
     def _do_first_pass(self):
         """
         As a first pass of the algorithm, determine the L1 (large 1-item set) by finding
-        each item in each row and adding the item to the KCollection if it is not already there.
-        If the item has already been seen, then increment the count.
-        :return:
+        each item in each row and adding the item to the candidate KItemsets if it is not already
+        there. If the item has already been seen, then increment the count of the number of times
+        that this item was seen.
+        :return: Returns a new KItemset representing the collection of large/frequent 1-item sets.
         """
         candidates = KItemsets(1)
         for tup in self.data.itertuples():
@@ -60,13 +58,13 @@ class DataMiner:
 
         # iterate through the dataset and determine the support for each item, finalizing
         # the large set for this pass.
-        collection = KItemsets(1)
+        collection_1 = KItemsets(1)
         for el, ct in candidates.items():
             support = ct / self.n_baskets
             if support > self.min_supp:
-                collection.items[frozenset({el})] = ct
+                collection_1.items[frozenset({el})] = ct
 
-        return collection
+        return collection_1
 
     def _apriori_gen(self, k, collection_k_sub):
         """
@@ -76,7 +74,8 @@ class DataMiner:
         After the join, a prune step is used to delete item set c from c_k if any subset of c is
         not in k-1. Returns the new group of verified candidate itemsets for this iteration.
 
-        Inspiration for how to perform join as part of candidate generation taken from
+        Inspiration for how to perform join as part of candidate generation, using a nested
+        for loop, was taken from:
         https://adataanalyst.com/machine-learning/apriori-algorithm-python-3-0/
 
         :param k: The iteration number of this candidate calculation
@@ -98,9 +97,7 @@ class DataMiner:
                 if self._eligible_join(p_set, q_set, k):
                     possible_candidates.add(frozenset((sorted(p_set + q_set))))
 
-        # "prune" the candidates by only adding candidate itemset as real candidates
-        # in the collection if all subsets of candidate itemsets of k -1 items are found
-        # in the k-1 large item set
+        # "prune" the possible candidates for the final candidate set
         for candidate in possible_candidates:
             if self._candidate_should_be_pruned(candidate, prev_large_itemsets, k):
                 continue
