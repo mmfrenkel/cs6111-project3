@@ -48,7 +48,8 @@ class DataMiner:
         that this item was seen.
         :return: Returns a new KItemset representing the collection of large/frequent 1-item sets.
         """
-        candidates = KItemsets(1)
+        k = 1
+        candidates = KItemsets(k)
         for tup in self.data.itertuples():
             for el in tup:
                 if el in candidates.items.keys():
@@ -57,14 +58,7 @@ class DataMiner:
                     candidates.items[frozenset({el})] = 1
 
         # iterate through the dataset and determine the support for each item, finalizing
-        # the large set for this pass.
-        collection_1 = KItemsets(1)
-        for el, ct in candidates.items():
-            support = ct / self.n_baskets
-            if support > self.min_supp:
-                collection_1.items[frozenset({el})] = ct
-
-        return collection_1
+        return self._create_large_itemset(candidates, k)
 
     def _apriori_gen(self, k, collection_k_sub):
         """
@@ -140,16 +134,30 @@ class DataMiner:
         Scan to find support for each of the candidates for k and add them to the large
         itemset for the new collection of large itemsets.
         """
-        collection_k = KItemsets(k)
-
         for tup in self.data.itertuples():
             for subset in self._find_subsets(tup, k):
 
                 # see if we found a record that contains this subset of tuples, so increment count
                 if subset in candidates_k.items.keys():
-                    collection_k.items[frozenset(subset)] += 1
-                else:
-                    collection_k.items[frozenset({subset})] = 1
+                    candidates_k.items[frozenset(subset)] += 1
+
+        # only save results above the specified support
+        return self._create_large_itemset(candidates_k, k)
+
+    def _create_large_itemset(self, candidates, k):
+        """
+        Takes candidate itemsets and produces a collection of large itemsets based
+        on the specified minimum support.
+        :param candidates: KItemsets instance, representing candidate itemsets
+        :param k: iteration number
+        :return: KItemsets instance, representing real large itemsets (subset of candidates)
+        """
+        collection_k = KItemsets(k)
+
+        for el, ct in candidates.items():
+            support = ct / self.n_baskets
+            if support >= self.min_supp:
+                collection_k.items[frozenset({el})] = ct
 
         return collection_k
 
