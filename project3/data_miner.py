@@ -69,8 +69,7 @@ class DataMiner:
         not in k-1. Returns the new group of verified candidate itemsets for this iteration.
 
         Inspiration for how to perform join as part of candidate generation, using a nested
-        for loop, was taken from:
-        https://adataanalyst.com/machine-learning/apriori-algorithm-python-3-0/
+        for loop, was taken from: https://www.javatpoint.com/nested-loop-join-algorithm
 
         :param k: The iteration number of this candidate calculation
         :param collection_k_sub: KItemsets instance, the collection holding the L(k-1) large item set
@@ -85,7 +84,7 @@ class DataMiner:
 
         # perform the join of the Lk-1 set to get all candidates
         for i in range(len(large_itemset_list)):
-            for j in range(i + 1, len(large_itemset_list)):
+            for j in range(len(large_itemset_list)):
                 p_set = large_itemset_list[i]
                 q_set = large_itemset_list[j]
                 if self._eligible_join(p_set, q_set, k):
