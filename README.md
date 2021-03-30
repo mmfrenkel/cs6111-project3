@@ -2,7 +2,43 @@
 
 ## I. About
 
-## II. Internal Design & Structure
+Data mining refers to the process of trying to extract interesting/useful conclusions from a large 
+database. Here, we attempt to "mine" association rules from a dataset containing [
+New York City Restaurant Inspection Results](https://data.cityofnewyork.us/Health/DOHMH-New-York-City-Restaurant-Inspection-Results/43nn-pn8j)
+found through the [NYC Open Data site](https://opendata.cityofnewyork.us/data/). 
+All NYC restaurants are required to undergo inspection annual to be compliant with the food 
+and safety obligations outlined in New York City Health Code Article 81. This dataset contains 
+every sustained/not yet adjudicated violation citation for active restaurants for the last three 
+years. This dataset is updated automatically on a daily basis by the Department of Health and 
+Mental Hygiene (DOHMH).
+
+## II. Design & Structure
+
+### i. Data Set and Cleaning
+
+Because the dataset selected represents "real world" data, we performed a series of cleaning steps
+on the downloaded data before attempting to extract association rules. The following list
+represents the steps, in order, that we took in cleaning the dataset, with an explanation:
+1. Remove any rows that do not contain a valid borough. We know there are only five valid boroughs
+in NYC (Staten Island, Manhattan, Queens, Brooklyn, Bronx), so every entry must contain one of this
+enumerated list of locations.
+2. Remove rows that are from inspections prior to 2018. The original dataset pulled from the NYC Open
+Data website contained 395K rows, far more than we needed for this analysis (and also a larger `.csv`
+file than is allowed by github.com); hence, we narrowed the dataset to this date range. This cleaning
+step includes the removal of rows with inspection dates of 1/1/1900, which represent the "dummy" value
+for new restaurants that have not yet received an inspection, but which are still included in the 
+dataset.
+3. Because the dataset includes a number of columns with numeric values, we decided to "bucket" the
+values into several numeric ranges. For example:
+    * 
+4. In order to make the extracted results more readable and clear, we decided to append the column
+name to data entry. For example, an entry in the Critical Flag column with `N` became `Critical Flag: N`
+in the analyzed dataset to facilitate analysis of the final association rules.
+5. Remove columns that contain duplicate information/identifiers. Note that the original dataset was
+ not fully normalized; for example, the dataset included a unique DOHMH identifier for the restaurant as 
+ well as the restaurant's name. If we ran the association rules script on this data, we would likely
+ get the uninteresting result that a restaurant's DOHMH identifier implies the restaurant name. The same
+ is true for the violation code/description. Hence, we decided to remove 
 
 ## III. Files
 
