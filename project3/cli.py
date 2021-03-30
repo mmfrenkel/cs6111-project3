@@ -12,24 +12,25 @@ class AssociativeRulesCli(cli.Application):
         "Metaswitches": colors.bold & colors.yellow,
     }
 
-    dataset = cli.SwitchAttr(
+    dataset_path = cli.SwitchAttr(
         ["-d", "--dataset"],
         argtype=str,
-        mandatory=False,
-        help="Specify .csv file for processing. By default: .csv",
+        default="./project3/data/restaurant_inspection_data.csv",
+        help="Specify .csv file for processing. By default: "
+             "./project3/data/restaurant_inspection_data.csv",
     )
 
     min_sup = cli.SwitchAttr(
         ["-s", "--minimum_support"],
         argtype=float,
-        mandatory=True,
+        default=0.5,
         help="Specify a minimum support value (float, 0-1)",
     )
 
     min_conf = cli.SwitchAttr(
         ["-c", "--minimum_confidence"],
         argtype=float,
-        mandatory=True,
+        default=0.5,
         help="Specify a minimum confidence value (float, 0-1)",
     )
 
@@ -39,6 +40,7 @@ class AssociativeRulesCli(cli.Application):
         information to it.
         """
         data = self.open_csv_as_df()
+        data = data.head(20)
 
         miner = DataMiner(data=data, min_supp=self.min_sup, min_conf=self.min_conf)
 
@@ -49,11 +51,10 @@ class AssociativeRulesCli(cli.Application):
         Reads a csv from file into a pandas data frame.
         """
         try:
-            return pd.read_csv(self.file_path)
+            return pd.read_csv(self.dataset_path)
         except FileNotFoundError:
-            print(
-                "FileNotFound: Are you sure you provided the path to the .csv file correctly?"
-            )
+            print("FileNotFound: Are you sure you provided the path to the .csv file"
+                  "correctly and that the file exists?")
             exit(1)
 
     def report_itemsets(self, item_sets):

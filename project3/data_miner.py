@@ -1,5 +1,6 @@
 from project3.itemsets import KItemsets
 import itertools
+import pandas as pd
 
 
 class DataMiner:
@@ -24,12 +25,12 @@ class DataMiner:
         # starting at k = 2, keep computing until we run out of large itemsets
         k = 2
         last_collection = collection_1
-        while last_collection.items:
+        while last_collection.item_sets:
             # 1. add the prev large item sets to the global large item results dictionary
-            large_itemsets.update(last_collection.items)
+            large_itemsets.update(last_collection.item_sets)
 
             # 2. generate the candidates for round k
-            candidates_k = self._apriori_gen(k, last_collection.items)
+            candidates_k = self._apriori_gen(k, last_collection)
 
             # 3. determine which candidates make it to the large candidate set for k
             collection_k = self._find_large_itemsets_for_k(candidates_k, k)
@@ -50,12 +51,14 @@ class DataMiner:
         """
         k = 1
         candidates = KItemsets(k)
-        for tup in self.data.itertuples():
+        for tup in self.data.itertuples(index=False):
             for el in tup:
-                if el in candidates.items.keys():
-                    candidates.items[frozenset({el})] += 1
+                if pd.isnull(el):
+                    continue
+                if frozenset({el}) in candidates.item_sets.keys():
+                    candidates.item_sets[frozenset({el})] += 1
                 else:
-                    candidates.items[frozenset({el})] = 1
+                    candidates.item_sets[frozenset({el})] = 1
 
         # iterate through the dataset and determine the support for each item, finalizing
         return self._create_large_itemset(candidates, k)
@@ -79,22 +82,22 @@ class DataMiner:
         possible_candidates = set()
 
         # list of lists corresponding to item sets from previous round
-        prev_large_itemsets = collection_k_sub.items.keys()
+        prev_large_itemsets = collection_k_sub.item_sets.keys()
         large_itemset_list = [list(itemset) for itemset in prev_large_itemsets]
 
         # perform the join of the Lk-1 set to get all candidates
         for i in range(len(large_itemset_list)):
             for j in range(len(large_itemset_list)):
-                p_set = large_itemset_list[i]
-                q_set = large_itemset_list[j]
+                p_set = sorted(large_itemset_list[i])
+                q_set = sorted(large_itemset_list[j])
                 if self._eligible_join(p_set, q_set, k):
-                    possible_candidates.add(frozenset((sorted(p_set + q_set))))
+                    possible_candidates.add(frozenset((p_set + q_set)))
 
         # "prune" the possible candidates for the final candidate set
         for candidate in possible_candidates:
             if self._candidate_should_be_pruned(candidate, prev_large_itemsets, k):
                 continue
-            verified_candidates_k.items[candidate] = 0
+            verified_candidates_k.item_sets[candidate] = 0
 
         return verified_candidates_k
 
@@ -124,7 +127,7 @@ class DataMiner:
         sub_itemsets = self._find_subsets(candidate, k - 1)
         return (
             True
-            if any(itemset in prev_large_itemsets for itemset in sub_itemsets)
+            if any(frozenset(itemset) not in prev_large_itemsets for itemset in sub_itemsets)
             else False
         )
 
@@ -134,11 +137,11 @@ class DataMiner:
         itemset for the new collection of large itemsets.
         """
         for tup in self.data.itertuples():
-            for subset in self._find_subsets(tup, k):
 
-                # see if we found a record that contains this subset of tuples, so increment count
-                if subset in candidates_k.items.keys():
-                    candidates_k.items[frozenset(subset)] += 1
+            # Find what candidate itemsets align with this tuple and adjust relevant count
+            for candidate_itemset in candidates_k.item_sets.keys():
+                if all(item in tup for item in list(candidate_itemset)):
+                    candidates_k.item_sets[candidate_itemset] += 1
 
         # only save results above the specified support
         return self._create_large_itemset(candidates_k, k)
@@ -153,10 +156,10 @@ class DataMiner:
         """
         collection_k = KItemsets(k)
 
-        for el, ct in candidates.items():
+        for fz_set, ct in candidates.item_sets.items():
             support = ct / self.n_baskets
             if support >= self.min_supp:
-                collection_k.items[frozenset({el})] = ct
+                collection_k.item_sets[fz_set] = ct
 
         return collection_k
 

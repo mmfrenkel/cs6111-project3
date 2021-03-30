@@ -5,4 +5,4 @@ class KItemsets:
 
     def __init__(self, k):
         self.k = k  # iteration/pass number
-        self.items = {}  # candidate item sets for level k; map of item set to count
+        self.item_sets = {}  # candidate item sets for level k; map of item set to count
