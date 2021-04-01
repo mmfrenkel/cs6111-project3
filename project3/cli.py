@@ -43,8 +43,7 @@ class AssociativeRulesCli(cli.Application):
         data = data.head(20)
 
         miner = DataMiner(data=data, min_supp=self.min_sup, min_conf=self.min_conf)
-
-        large_item_sets = miner.compute_item_sets()
+        large_item_sets = miner.find_large_item_sets()
 
     def open_csv_as_df(self):
         """

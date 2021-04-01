@@ -10,7 +10,7 @@ class DataMiner:
         self.min_conf = min_conf
         self.n_baskets = len(data)
 
-    def compute_item_sets(self):
+    def find_large_item_sets(self):
         """
         Computes all large item sets from a collection, given a previously specified
         minimum confidence and support.
