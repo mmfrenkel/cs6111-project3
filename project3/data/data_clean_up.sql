@@ -48,5 +48,8 @@ DROP COLUMN VIOLATION_CODE;
 ALTER TABLE restaurant_inspection_data2
 DROP COLUMN SCORE;
 
-ALTER TABLE restaurant_inspection_data2
-DROP COLUMN GRADE_DATE;
+DELETE FROM restaurant_inspection_data2 WHERE DBA IS NULL OR DBA = "";
+
+UPDATE restaurant_inspection_data2
+SET GRADE = "-"
+WHERE GRADE IS NULL OR GRADE = "";

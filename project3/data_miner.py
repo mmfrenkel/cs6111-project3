@@ -1,6 +1,5 @@
 from project3.itemsets import KItemsets
 import itertools
-import pandas as pd
 
 
 class DataMiner:
@@ -16,6 +15,8 @@ class DataMiner:
         minimum confidence and support.
         :return: A dictionary of large item set to support, for all large itemsets identified
         """
+        print(f"Finding large itemsets from {self.n_baskets} baskets. This can take some time...\n")
+
         # will contain a mapping of large itemsets to their count in data
         large_itemsets = {}
 
@@ -26,6 +27,10 @@ class DataMiner:
         k = 2
         last_collection = collection_1
         while last_collection.item_sets:
+            print(f" * {len(last_collection.item_sets)} large itemsets found in "
+                  f"iteration k = {k-1}.")
+            print(f"Starting pass k = {k}...")
+
             # 1. add the prev large item sets to the global large item results dictionary
             large_itemsets.update(last_collection.item_sets)
 
@@ -49,11 +54,12 @@ class DataMiner:
         that this item was seen.
         :return: Returns a new KItemset representing the collection of large/frequent 1-item sets.
         """
+        print(f"Starting pass k = 1...")
         k = 1
         candidates = KItemsets(k)
         for tup in self.data.itertuples(index=False):
             for el in tup:
-                if pd.isnull(el):
+                if el == "" or el == "-":  # note that all values are loaded as strings
                     continue
                 if frozenset({el}) in candidates.item_sets.keys():
                     candidates.item_sets[frozenset({el})] += 1
@@ -61,7 +67,7 @@ class DataMiner:
                     candidates.item_sets[frozenset({el})] = 1
 
         # iterate through the dataset and determine the support for each item, finalizing
-        return self._create_large_itemset(candidates, k)
+        return self._create_large_itemsets(candidates, k)
 
     def _apriori_gen(self, k, collection_k_sub):
         """
@@ -75,9 +81,11 @@ class DataMiner:
         for loop, was taken from: https://www.javatpoint.com/nested-loop-join-algorithm
 
         :param k: The iteration number of this candidate calculation
-        :param collection_k_sub: KItemsets instance, the collection holding the L(k-1) large item set
+        :param collection_k_sub: KItemsets instance, the collection holding the L(k-1)
+                large item set
         :return: new KItemsets containing candidates for iteration k
         """
+        print(f" * Generating candidate large itemsets.")
         verified_candidates_k = KItemsets(k)
         possible_candidates = set()
 
@@ -108,7 +116,7 @@ class DataMiner:
         Joins are only eligible if the item sets share the first k-2 elements and if the
         element at index k-2 in is "less than" the element at q.
         """
-        if p[: k - 2] == q[: k - 2] and p[k - 2] < q[k - 2]:
+        if p[: k - 2] == q[: k - 2] and str(p[k - 2]) < str(q[k - 2]):
             return True
         return False
 
@@ -126,8 +134,7 @@ class DataMiner:
         """
         sub_itemsets = self._find_subsets(candidate, k - 1)
         return (
-            True
-            if any(frozenset(itemset) not in prev_large_itemsets for itemset in sub_itemsets)
+            True if any(frozenset(itemset) not in prev_large_itemsets for itemset in sub_itemsets)
             else False
         )
 
@@ -136,6 +143,7 @@ class DataMiner:
         Scan to find support for each of the candidates for k and add them to the large
         itemset for the new collection of large itemsets.
         """
+        print(f" * Determining large itemsets from candidates.")
         for tup in self.data.itertuples():
 
             # Find what candidate itemsets align with this tuple and adjust relevant count
@@ -144,9 +152,9 @@ class DataMiner:
                     candidates_k.item_sets[candidate_itemset] += 1
 
         # only save results above the specified support
-        return self._create_large_itemset(candidates_k, k)
+        return self._create_large_itemsets(candidates_k, k)
 
-    def _create_large_itemset(self, candidates, k):
+    def _create_large_itemsets(self, candidates, k):
         """
         Takes candidate itemsets and produces a collection of large itemsets based
         on the specified minimum support.
