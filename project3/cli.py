@@ -17,7 +17,7 @@ class AssociativeRulesCli(cli.Application):
         argtype=str,
         default="./project3/data/restaurant_inspection_data_adj.csv",
         help="Specify .csv file for processing. By default: "
-             "./project3/data/restaurant_inspection_data.csv",
+        "./project3/data/restaurant_inspection_data.csv",
     )
 
     min_sup = cli.SwitchAttr(
@@ -47,6 +47,8 @@ class AssociativeRulesCli(cli.Application):
         miner = DataMiner(data=data, min_supp=self.min_sup, min_conf=self.min_conf)
         large_item_sets = miner.find_large_item_sets()
         self.report_large_itemsets(large_item_sets)
+        high_conf_rules = miner.find_high_conf_rules(large_item_sets)
+        self.report_high_conf_rules(high_conf_rules)
 
     def open_csv_as_df(self):
         """
@@ -56,28 +58,60 @@ class AssociativeRulesCli(cli.Application):
         try:
             return pd.read_csv(self.dataset_path, sep=",", dtype="string")
         except FileNotFoundError:
-            print("FileNotFound: Are you sure you provided the path to the .csv file"
-                  "correctly and that the file exists?")
+            print(
+                "FileNotFound: Are you sure you provided the path to the .csv file"
+                "correctly and that the file exists?"
+            )
             exit(1)
 
     def print_header(self):
-        print("***************************************************************************")
-        print("                        ASSOCIATION RULE FINDER                       \n")
+        print(
+            "***************************************************************************"
+        )
+        print(
+            "                        ASSOCIATION RULE FINDER                       \n"
+        )
         print(f" * Dataset            : {self.dataset_path}")
         print(f" * Minimum Support    : {self.min_sup}")
         print(f" * Minimum Confidence : {self.min_conf}")
-        print("***************************************************************************")
+        print(
+            "***************************************************************************"
+        )
 
     @staticmethod
     def report_large_itemsets(item_sets):
         """
         Reports item set results back to user.
         """
-        print("\n***************************************************************************")
-        print(f"                  Large Itemsets Founds ({len(item_sets)}): ")
+        print(
+            "\n***************************************************************************"
+        )
+        print(f"                  Large Itemsets Found ({len(item_sets)}): ")
         for large_item_set, support in item_sets.items():
             print(f" * {list(large_item_set)}: {support}")
-        print("***************************************************************************")
+        print(
+            "***************************************************************************"
+        )
+
+    @staticmethod
+    def report_high_conf_rules(association_rules):
+        """
+        Reports association rules that meet the confidence threshold back to the user.
+        """
+        ## DELETE LATER, THIS IS FOR LINH - for now the assumption is that the rules will be in a sorted list where each element in the list will be a Rule object - see rule.py for class info
+        print(
+            "\n***************************************************************************"
+        )
+        print(
+            f"             High-Confidence Association Rules Found ({len(association_rules)}): "
+        )
+        for rule in association_rules:
+            print(
+                f" * {list(rule.lhs)} => {list(rule.rhs)} (Conf: {rule.conf:.1%}, Sup: {rule.supp:.1%})"
+            )
+        print(
+            "***************************************************************************"
+        )
 
 
 if __name__ == "__main__":

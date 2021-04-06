@@ -1,4 +1,5 @@
 from project3.itemsets import KItemsets
+from project3.rules import Rule
 import itertools
 
 
@@ -15,7 +16,9 @@ class DataMiner:
         minimum confidence and support.
         :return: A dictionary of large item set to support, for all large itemsets identified
         """
-        print(f"Finding large itemsets from {self.n_baskets} baskets. This can take some time...\n")
+        print(
+            f"Finding large itemsets from {self.n_baskets} baskets. This can take some time...\n"
+        )
 
         # will contain a mapping of large itemsets to their count in data
         large_itemsets = {}
@@ -27,8 +30,10 @@ class DataMiner:
         k = 2
         last_collection = collection_1
         while last_collection.item_sets:
-            print(f" * {len(last_collection.item_sets)} large itemsets found in "
-                  f"iteration k = {k-1}.")
+            print(
+                f" * {len(last_collection.item_sets)} large itemsets found in "
+                f"iteration k = {k-1}."
+            )
             print(f"Starting pass k = {k}...")
 
             # 1. add the prev large item sets to the global large item results dictionary
@@ -134,7 +139,11 @@ class DataMiner:
         """
         sub_itemsets = self._find_subsets(candidate, k - 1)
         return (
-            True if any(frozenset(itemset) not in prev_large_itemsets for itemset in sub_itemsets)
+            True
+            if any(
+                frozenset(itemset) not in prev_large_itemsets
+                for itemset in sub_itemsets
+            )
             else False
         )
 
@@ -182,3 +191,29 @@ class DataMiner:
         :return: list of subsets with n elements
         """
         return list(map(set, itertools.combinations(s, n)))
+
+    # PUTTING LINH'S CODE FAIRLY FAR AWAY SO WE CAN DEAL WITH IT SEPARATELY - DELETE THIS COMMENT LATER AND THE ONE BELOW TOO
+
+    def find_high_conf_rules(self, item_sets):
+        """
+        Computes all large high-confidence association rules based on large itemset passed in. 
+        Confidence threshold is based on value provided by user.
+        :param item_sets: dictionary of item sets that the rules should be calculated from
+        :return: list of Rule objects sorted by confidence value
+        """
+        high_conf_rules = []
+
+        for item_set, support in item_sets.items():
+            if len(item_set) > 1:
+                for el in item_set:
+                    rhs = frozenset({el})
+                    lhs = item_set.difference(rhs)
+
+                    conf = item_sets[item_set] / item_sets[lhs]
+                    if conf >= self.min_conf:
+                        curr_rule = Rule(lhs, rhs, support, conf)
+                        high_conf_rules.append(curr_rule)
+
+        high_conf_rules.sort(key=lambda x: (x.conf, x.supp), reverse=True)
+
+        return high_conf_rules
