@@ -64,7 +64,7 @@ class AssociativeRulesCli(cli.Application):
             exit(1)
 
         try:
-            return pd.read_csv(self.dataset_path, sep=";", dtype="string")
+            return pd.read_csv(self.dataset_path, sep=",", dtype="string")
         except FileNotFoundError:
             print(
                 "FileNotFound: Are you sure you provided the path to the .csv file"
@@ -103,7 +103,7 @@ class AssociativeRulesCli(cli.Application):
         for i, rule in enumerate(association_rules):
             print(f"\nAssociation Rule #{i}")
             print(textwrap.fill(f"* Rule: {list(rule.lhs)} => {list(rule.rhs)} ", 80))
-            print(f"* Metrics: Conf: {rule.conf:.1%}, Sup: {rule.supp:.1%}")
+            print(f"* Metrics: (Conf: {rule.conf:.1%}, Sup: {rule.supp:.1%})")
         print(STARS)
 
 

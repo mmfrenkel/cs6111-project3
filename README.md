@@ -171,20 +171,20 @@ The default dataset completes in 5-10 minutes.
 
 ## VI. Results
 
+When we found this dataset, we were intrigued by the opportunity to learn what, if any, associations
+exist between boroughs/cuisines and different restaurant health code violations in New York City.
 See sample results in `./project3/results/output.txt` from running the program with a minimum
 support of 0.1 and minimum confidence of 0.2.
 
-When we found this dataset, we were intrigued by the opportunity to learn what, if any, associations
-exist between boroughs/cuisines and different restaurant health code violations in New York City.
-
 Here are several excerpts from our `output.txt` file that we found interesting:
 
-Although we did not see many different cuisines in our association rule results, we did see one
-cuisine that appears to be fairly commonly associated with restaurant violations: American food.
+##### 1. American Restaurant Violations 
+Although we did not see a wide set of cuisines represented in our association rule results, we found
+one cuisine commonly associated with restaurant violations: American food.
 For example, consider the results below, which suggest that there is a relationship between 
-American restaurants in Manhattan and  violation 10F. Less specific to Manhattan restaurants, 
+American restaurants in Manhattan and violation 10F. Less specific to Manhattan restaurants, 
 it also appears that there is a relationship between American restaurants and and violations 06D,
-08A, 04N, which are more vile observations of contamination, vermin, and flies respectively. It is
+08A, 04N. These violations represent contamination, vermin, and flies respectively. It is
 interesting that American food is the only cuisine specifically associated with violations.
 ```
 Association Rule #7
@@ -223,6 +223,8 @@ Food/refuse/sewage-associated flies include fruit flies, drain flies and Phorid
 flies.'] => ['American']
 * Metrics: (Conf: 21.8%, Sup: 1.1%)
 ```
+
+##### 2. Mice Everywhere
 Another interesting observation is that it appears that restaurants throughout the borough's 
 are plagued by mice. As shown below, there is evidence of violation 04L in Manhattan, Brooklyn
 and Queens, suggesting that this is a problem that shows up all over the city -- for those who
@@ -243,9 +245,12 @@ Association Rule #43
 food and/or non-food areas."] => ['Queens']
 * Metrics: (Conf: 23.7%, Sup: 1.9%)
 ```
+##### Other Comments
 
 Alongside these interesting results, our program also generates a series of high confidence 
-association rules that are not interesting and insightful; for example `DUNKIN => Donuts`.
+association rules that are not interesting and insightful; for example `DUNKIN => Donuts` (most
+people know that DUNKINs serves donuts already.
+
 This demonstrates how although programs can be written to generate association rules, human 
 judgements and knowledge of the relevant domain of the dataset are required to pick out the 
 interesting association rule.
