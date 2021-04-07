@@ -1,4 +1,4 @@
-# cs6111-project3
+# cs6111-project3: Mining Association Rules
 
 ## I. About
 
@@ -12,43 +12,41 @@ every sustained/not yet adjudicated violation citation for active restaurants fo
 years (2018-2021). This dataset is updated automatically on a daily basis by the Department of Health and 
 Mental Hygiene (DOHMH).
 
-Note that while we decided to run our association rules program with this dataset, our program was
+The final, cleaned dataset that we used to generate association rules as part of this project can be found
+in `./project/data/restaurant_data_lim.csv`. Note that while we decided to use this specifc dataset, this program is
 written generically enough to handle any cleaned dataset in .csv format with comma-separated values.
 
 ## II. Design & Structure
 
 ### i. Data Set and Cleaning
 
-The final dataset that we used to generate association rules as part of this project can be found
-in `./project/data/restaurant_data_lim.csv`.
-
 Because the dataset selected represents "real world" data, we performed a series of cleaning steps
-on the downloaded data before attempting to extract association rules. The following list
-represents the steps, in order, that we took in cleaning the dataset, with an explanation:
-1. Remove any rows that do not contain a valid borough. We know there are only five valid boroughs
+on the data downloaded directly from the NYC Open Data Site before attempting to extract association rules. 
+The following list represents the steps, in order, that we took in cleaning the dataset:
+1. Remove any rows that do not contain a valid borough: We know there are only five valid boroughs
 in NYC (Staten Island, Manhattan, Queens, Brooklyn, Bronx), so every entry must contain one of this
 enumerated list of locations.
-2. Remove rows that are from inspections prior to 2018. The original dataset pulled from the NYC Open
+2. Remove rows that are from inspections prior to 2018: The original dataset pulled from the NYC Open
 Data website contained 395K rows, far more than we needed for this analysis; hence, we narrowed the 
 dataset to this date range. This cleaning step included the removal of rows with inspection dates of 
 1/1/1900, which represent the "dummy" value for new restaurants that have not yet received an inspection, 
 but which are still included in the  dataset.
-3. Because the dataset includes a number of columns with numeric values, we decided to "bucket" the
+3. Bucket values: Because the dataset includes a number of columns with numeric values, we decided to "bucket" the
 values into several numeric ranges. However, later analysis showed that this data was neither 
-interesting nor helpful, so we removed our bucketed columns in the final, cleaned dataset.
-4. In order to make the extracted results more readable and clear, we decided to append the column
-name to data entry. For example, we append "Inspection Date" to entries in the `INSPECTION_DATE` 
-column to facilitate analysis of the final association rules (i.e., we understand that 2018 is a 
-date, not any other numeric value. We did the same "data massaging" for other columns that were 
+interesting nor helpful, so we ended up removing our bucketed columns in the final, cleaned dataset.
+4. Append Column Names: In order to make the extracted results more readable and clear, we decided to 
+append the column name to data entry. For example, we append "Inspection Date: " to entries in the `INSPECTION_DATE` 
+column to facilitate analysis of the final association rules (i.e., so that we understand that 2018 is a 
+date, not any other numeric value). We did the same "data labeling" exercise for other columns that were 
 not entirely clear, including merging violation code with violation description to create the final
 `VIOLATION_DESCRIPTION` column in the dataset.
-5. Remove columns that contain duplicate information/identifiers. The original dataset was
+5. Remove columns that contain duplicate information/identifiers: The original dataset was
  not fully normalized; for example, the dataset included a unique DOHMH identifier for the restaurant as 
  well as the restaurant's name. If we ran the association rules program on this data, we would almost
  certainly get the uninteresting result that a restaurant's DOHMH identifier implies the restaurant name. 
  The same is true for the violation code/description and zipcode/borough. Hence, we decided to remove
  columns that did not provide any new information. 
-6. Finally, we removed any columns that contained information that was either (a) incomplete or 
+6. Remove unhelpful columns: We removed any columns that contained information that was either (a) incomplete or 
 (b) did not contain a diverse set of information. For example, the `GRADE` column of the original dataset
 was incomplete; since we were more interested in the relationship between borough/restaurant/cuisine and 
 violations, and not in the final grade, we were comfortable removing this column. As another example,
@@ -58,27 +56,27 @@ to be generated, despite the fact that they would not likely be interesting resu
 can see several iterations of the dataset in `/project3/data/` that reflect our iterations of cleaning
 and simplifying the data over time.
 
-Note: A subset of explicit cleaning steps outlined above is available `/project3/data/data_clean_up_restaurants.sql`. 
+Note: A subset of explicit cleaning steps outlined above is available here: `/project3/data/data_clean_up_restaurants.sql`. 
 
 ### ii. Internal Design 
 
 Users interact with our program through the "cli layer", which acts as a user-friendly wrapper for 
 the underlying `DataMiner` class. The cli layer is able to perform some rudimentary validation on the 
 parameters to the program and provide some helpful suggestions for how to use the tool. The cli 
-layer is also responsible for handling I/O (reading in files and printing out results) for the user.
+layer is also responsible for handling I/O (reading in files and printing out results to the user).
 See section **V. Run** to see more information on how users interact with the cli layer.
 
-Once a valid `.csv` is determined, the cli layer read in the specified .csv file as a pandas 
-dataframe and passes it, along with the  support and confidence specifications, to an instance of 
+Once a path to a valid `.csv` is obtained, the cli layer read in the specified .csv file as a pandas 
+dataframe and passes it, along with the minimum support and confidence specifications, to an instance of 
 the `DataMiner` class. The `DataMiner` instance is then called upon to generate the large itemsets 
 for the data just the minimum support (`min_supp`) provided as a support threshold.
 
 In order to generate large itemsets, the `DataMiner` uses the a-priori algorithm outlined in Section 2.1.1
 Agrawal and Srikant (1994). The algorithm proceeds as follows:
-* Determine large 1-itemsets (k = 1, i.e., the first pass through the data) by looking at each 
+1. Determine large 1-itemsets (k = 1, i.e., the first pass through the data) by looking at each 
 individual item, counting the number of occurrences, and keeping only items with 
 support >= min_supp.
-* For each future iteration (k > 1), the pass occurs in two phases:
+2. For each future iteration (k > 1), the pass occurs in two phases:
     1. Determine the candidate k-itemsets via the `DataMiner` class' `_apriori_gen` function. This function
     itself has two primary steps. In the `join` step, the large (k-1)-itemsets are joined with itself
     in a SQL-like fashion to generate candidates. Then, in the `prune` step, any candidates that have 
@@ -89,15 +87,16 @@ support >= min_supp.
     2.1.1 of Agrawal and Srikant (1994) and instead use a simpler approach of comparing elements within 
      each transaction with the candidate itemset contents. Only candidate k-itemsets that reach the
      support threshold are kept around to serve as the "seed" for the next itemset iteration.
- * Through each iteration, a dictionary mapping larget itemsets to count in the database is updated. This allows
- the support for each large itemset to be stored for the next step of data processing.
- * Once there are no more large itemsets to consider, the algorithm stops and all large itemsets
+3. Through each iteration, a dictionary mapping larget itemsets to count in the database is updated. This allows
+ the support for each large itemset to be stored for the next step of data processing, the generation
+ of assocation rules.
+4. Once there are no more large itemsets to consider, the loop stops and all large itemsets are returned.
    
 Once the large itemsets are generated and returned back to the cli layer to be printed to the user,
-the program once again calls upon the `DataMiner` class to find the high confidence rules. The function 
-builds all possible association rules that have exactly one item on the right side and with at least
+the cli layer once again calls upon the `DataMiner` class to find the "high confidence" rules. The `DataMiner` 
+builds all possible association rules that have exactly one item on the right side and at least
 one item on the left side, where the right-side item does not appear on the left side.
-Only association rules with confidence about `min_conf` are considered "high-confidence rules" and
+Only association rules with confidence above `min_conf` are considered "high-confidence" and
 returned to the cli layer.
 
 The cli layer, upon receiving the final results from the `DataMiner`, prints out the results to the user.
