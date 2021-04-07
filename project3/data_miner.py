@@ -16,9 +16,8 @@ class DataMiner:
         minimum confidence and support.
         :return: A dictionary of large item set to support, for all large itemsets identified
         """
-        print(
-            f"Finding large itemsets from {self.n_baskets} baskets. This can take some time...\n"
-        )
+        print(f"Finding large itemsets from {self.n_baskets} baskets.")
+        print("Warning: This can take some time...\n")
 
         # will contain a mapping of large itemsets to their count in data
         large_itemsets = {}
@@ -192,18 +191,17 @@ class DataMiner:
         """
         return list(map(set, itertools.combinations(s, n)))
 
-    # PUTTING LINH'S CODE FAIRLY FAR AWAY SO WE CAN DEAL WITH IT SEPARATELY - DELETE THIS COMMENT LATER AND THE ONE BELOW TOO
-
     def find_high_conf_rules(self, item_sets):
         """
-        Computes all large high-confidence association rules based on large itemset passed in. 
+        Computes all large high-confidence association rules based on large itemset passed in.
         Confidence threshold is based on value provided by user.
         :param item_sets: dictionary of item sets that the rules should be calculated from
         :return: list of Rule objects sorted by confidence value
         """
         high_conf_rules = []
 
-        for item_set, support in item_sets.items():
+        for item_set, ct in item_sets.items():
+            support = ct / self.n_baskets
             if len(item_set) > 1:
                 for el in item_set:
                     rhs = frozenset({el})
@@ -215,5 +213,4 @@ class DataMiner:
                         high_conf_rules.append(curr_rule)
 
         high_conf_rules.sort(key=lambda x: (x.conf, x.supp), reverse=True)
-
         return high_conf_rules
