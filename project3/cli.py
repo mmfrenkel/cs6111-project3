@@ -74,7 +74,7 @@ class AssociativeRulesCli(cli.Application):
 
     def print_header(self):
         print(STARS)
-        print("               ASSOCIATION RULE FINDER\n")
+        print("                    ASSOCIATION RULE FINDER\n")
         print(f" * Dataset            : {self.dataset_path}")
         print(f" * Minimum Support    : {self.min_sup}")
         print(f" * Minimum Confidence : {self.min_conf}")
@@ -84,8 +84,8 @@ class AssociativeRulesCli(cli.Application):
         """
         Reports item set results back to user.
         """
-        print(f"\\n{STARS}")
-        print(f"              Large Itemsets Found ({len(item_sets)}):\n")
+        print(f"\n{STARS}")
+        print(f"                  Large Itemsets Found ({len(item_sets)}):\n")
         for large_item_set, ct in item_sets.items():
             support = ct / len(self.data)
             print(textwrap.fill(f" * {list(large_item_set)}: {support:.1%}", 80))
@@ -98,12 +98,12 @@ class AssociativeRulesCli(cli.Application):
         """
         n_result = len(association_rules)
         print(f"{STARS}")
-        print(f"             High-Confidence Association Rules Found ({n_result}):")
+        print(f"               High-Confidence Association Rules Found ({n_result}):")
 
         for i, rule in enumerate(association_rules):
             print(f"\nAssociation Rule #{i}")
             print(textwrap.fill(f"* Rule: {list(rule.lhs)} => {list(rule.rhs)} ", 80))
-            print(f"* Metrics: (Conf: {rule.conf:.1%}, Sup: {rule.supp:.1%})")
+            print(f"* Metrics: Conf: {rule.conf:.1%}, Sup: {rule.supp:.1%}")
         print(STARS)
 
 

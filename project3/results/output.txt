@@ -1,0 +1,592 @@
+***************************************************************************
+                    ASSOCIATION RULE FINDER
+
+ * Dataset            : ./project3/data/restaurant_inspection_data_lim.csv
+ * Minimum Support    : 0.01
+ * Minimum Confidence : 0.2
+***************************************************************************
+Finding large itemsets from 280022 baskets.
+Warning: This can take some time...
+
+Starting pass k = 1...
+ * 52 large itemsets found in iteration k = 1.
+Starting pass k = 2...
+ * Generating candidate large itemsets.
+ * Determining large itemsets from candidates.
+ * 64 large itemsets found in iteration k = 2.
+Starting pass k = 3...
+ * Generating candidate large itemsets.
+ * Determining large itemsets from candidates.
+ * 2 large itemsets found in iteration k = 3.
+Starting pass k = 4...
+ * Generating candidate large itemsets.
+ * Determining large itemsets from candidates.
+***************************************************************************
+                  Large Itemsets Found (118):
+
+ * ['Brooklyn']: 25.3%
+ * ['Violation 10F: Non-food contact surface improperly constructed.
+Unacceptable material used. Non-food contact surface or equipment improperly
+maintained and/or not properly sealed, raised, spaced or movable to allow
+accessibility for cleaning on all sides, above and underneath the unit.']: 14.9%
+ * ['Violation 02B: Hot food item not held at or above 140º F.']: 5.3%
+ * ['American']: 18.6%
+ * ['Violation 02H: Food not cooled by an approved method whereby the internal
+product temperature is reduced from 140º F to 70º F or less within 2 hours, and
+from 70º F to 41º F or less within 4 additional hours.']: 1.8%
+ * ['Japanese']: 3.7%
+ * ['Chinese']: 11.1%
+ * ['Violation 08C: Pesticide use not in accordance with label or applicable
+laws. Prohibited chemical used/stored. Open bait station used.']: 1.8%
+ * ['Violation 08A: Facility not vermin proof. Harborage or conditions conducive
+to attracting vermin to the premises and/or allowing vermin to exist.']: 11.6%
+ * ["Violation 04L: Evidence of mice or live mice present in facility's food
+and/or non-food areas."]: 8.0%
+ * ['Violation 06D: Food contact surface not properly washed, rinsed and
+sanitized after each use and following any activity when contamination may have
+occurred.']: 7.1%
+ * ['Manhattan']: 38.9%
+ * ['Italian']: 4.0%
+ * ['French']: 1.1%
+ * ['Café/Coffee/Tea']: 4.9%
+ * ['Violation 04N: Filth flies or food/refuse/sewage-associated (FRSA) flies
+present in facility’s food and/or non-food areas. Filth flies include house
+flies, little house flies, blow flies, bottle flies and flesh flies.
+Food/refuse/sewage-associated flies include fruit flies, drain flies and Phorid
+flies.']: 5.2%
+ * ['Violation 04H: Raw, cooked or prepared food is adulterated, contaminated,
+cross-contaminated, or not discarded in accordance with HACCP plan.']: 2.3%
+ * ['Pizza']: 6.5%
+ * ['Violation 06C: Food not protected from potential source of contamination
+during storage, preparation, transportation, display or service.']: 6.0%
+ * ['Violation 10B: Plumbing not properly installed or maintained; anti-
+siphonage or backflow prevention device not provided where required; equipment
+or floor not properly drained; sewage disposal system in disrepair or not
+functioning properly.']: 6.0%
+ * ['Latin American (Central and South America)']: 4.5%
+ * ['Violation 09C: Food contact surface not properly maintained.']: 1.8%
+ * ['Mexican']: 3.6%
+ * ['Violation 04A: Food Protection Certificate not held by supervisor of food
+operations.']: 1.9%
+ * ['DUNKIN']: 1.0%
+ * ['Donuts']: 1.4%
+ * ['Jewish/Kosher']: 1.4%
+ * ['Mediterranean']: 1.1%
+ * ['Violation 02G: Cold food item held above 41º F (smoked fish and reduced
+oxygen packaged foods above 38 ºF) except during necessary preparation.']: 6.0%
+ * ["Violation 04M: Live roaches present in facility's food and/or non-food
+areas."]: 2.3%
+ * ['Chicken']: 2.6%
+ * ['Cakes, Cupcakes, Desserts']: 3.1%
+ * ['Violation 06F: Wiping cloths soiled or not stored in sanitizing
+solution.']: 1.7%
+ * ['Violation 10H: Proper sanitization not provided for utensil ware washing
+operation.']: 1.7%
+ * ['Violation 06E: Sanitized equipment or utensil, including in-use food
+dispensing utensil, improperly used or stored.']: 1.9%
+ * ['Violation 06A: Personal cleanliness inadequate. Outer garment soiled with
+possible contaminant.  Effective hair restraint not worn in an area where food
+is prepared.']: 1.8%
+ * ['Violation 05D: Hand washing facility not provided in or near food
+preparation area and toilet room. Hot and cold running water at adequate
+pressure to enable cleanliness of employees not provided at facility. Soap and
+an acceptable hand-drying device not provided.']: 1.1%
+ * ['Juice, Smoothies, Fruit Salads']: 1.3%
+ * ['Violation 09B: Thawing procedures improper.']: 1.2%
+ * ['Tex-Mex']: 1.2%
+ * ['Queens']: 23.5%
+ * ['Hamburgers']: 1.4%
+ * ['Staten Island']: 3.2%
+ * ['Spanish']: 3.0%
+ * ['Bronx']: 9.1%
+ * ['Caribbean (Inc. Cuban, Puerto Rican)']: 3.7%
+ * ['Violation 10I: Single service item reused, improperly stored, dispensed;
+not used when required.']: 1.1%
+ * ['Asian']: 1.7%
+ * ['Sandwiches']: 2.8%
+ * ['Thai']: 1.5%
+ * ['Korean']: 1.5%
+ * ['Indian']: 1.8%
+ * ['Manhattan', 'Violation 02B: Hot food item not held at or above 140º F.']:
+1.9%
+ * ['Brooklyn', "Violation 04L: Evidence of mice or live mice present in
+facility's food and/or non-food areas."]: 2.1%
+ * ['Violation 06D: Food contact surface not properly washed, rinsed and
+sanitized after each use and following any activity when contamination may have
+occurred.', 'Brooklyn']: 1.7%
+ * ['American', 'Violation 04N: Filth flies or food/refuse/sewage-associated
+(FRSA) flies present in facility’s food and/or non-food areas. Filth flies
+include house flies, little house flies, blow flies, bottle flies and flesh
+flies. Food/refuse/sewage-associated flies include fruit flies, drain flies and
+Phorid flies.']: 1.1%
+ * ['Manhattan', 'Chinese']: 2.9%
+ * ['American', 'Bronx']: 1.1%
+ * ['Violation 08A: Facility not vermin proof. Harborage or conditions conducive
+to attracting vermin to the premises and/or allowing vermin to exist.',
+'Bronx']: 1.2%
+ * ['Brooklyn', 'Violation 02B: Hot food item not held at or above 140º F.']:
+1.4%
+ * ['Manhattan', 'American']: 9.7%
+ * ['Latin American (Central and South America)', 'Queens']: 1.7%
+ * ['Donuts', 'DUNKIN']: 1.0%
+ * ['Brooklyn', 'Pizza']: 1.6%
+ * ['Violation 10B: Plumbing not properly installed or maintained; anti-
+siphonage or backflow prevention device not provided where required; equipment
+or floor not properly drained; sewage disposal system in disrepair or not
+functioning properly.', 'American']: 1.3%
+ * ['Manhattan', 'Italian']: 2.4%
+ * ["Violation 04L: Evidence of mice or live mice present in facility's food
+and/or non-food areas.", 'Queens']: 1.9%
+ * ['Manhattan', 'Sandwiches']: 1.3%
+ * ['Queens', 'Pizza']: 1.5%
+ * ['Violation 10F: Non-food contact surface improperly constructed.
+Unacceptable material used. Non-food contact surface or equipment improperly
+maintained and/or not properly sealed, raised, spaced or movable to allow
+accessibility for cleaning on all sides, above and underneath the unit.',
+'Bronx']: 1.3%
+ * ['Violation 02G: Cold food item held above 41º F (smoked fish and reduced
+oxygen packaged foods above 38 ºF) except during necessary preparation.',
+'Queens']: 1.3%
+ * ['Manhattan', 'Violation 06D: Food contact surface not properly washed,
+rinsed and sanitized after each use and following any activity when
+contamination may have occurred.']: 3.1%
+ * ['Brooklyn', 'Mexican']: 1.1%
+ * ['American', 'Violation 06C: Food not protected from potential source of
+contamination during storage, preparation, transportation, display or
+service.']: 1.0%
+ * ['Manhattan', 'Violation 02G: Cold food item held above 41º F (smoked fish
+and reduced oxygen packaged foods above 38 ºF) except during necessary
+preparation.']: 2.5%
+ * ['Queens', 'Violation 08A: Facility not vermin proof. Harborage or conditions
+conducive to attracting vermin to the premises and/or allowing vermin to
+exist.']: 2.6%
+ * ['Brooklyn', 'Violation 02G: Cold food item held above 41º F (smoked fish and
+reduced oxygen packaged foods above 38 ºF) except during necessary
+preparation.']: 1.5%
+ * ['Chinese', 'Bronx']: 1.1%
+ * ['Chinese', 'Violation 08A: Facility not vermin proof. Harborage or
+conditions conducive to attracting vermin to the premises and/or allowing vermin
+to exist.']: 1.3%
+ * ['Brooklyn', 'Violation 08A: Facility not vermin proof. Harborage or
+conditions conducive to attracting vermin to the premises and/or allowing vermin
+to exist.']: 3.0%
+ * ['Violation 06D: Food contact surface not properly washed, rinsed and
+sanitized after each use and following any activity when contamination may have
+occurred.', 'American']: 1.8%
+ * ['Brooklyn', 'Chinese']: 3.3%
+ * ['Manhattan', 'Café/Coffee/Tea']: 2.7%
+ * ['Brooklyn', 'Café/Coffee/Tea']: 1.3%
+ * ['American', 'Queens']: 3.0%
+ * ['Manhattan', 'Japanese']: 2.0%
+ * ["Violation 04L: Evidence of mice or live mice present in facility's food
+and/or non-food areas.", 'Chinese']: 1.0%
+ * ['Queens', 'Caribbean (Inc. Cuban, Puerto Rican)']: 1.1%
+ * ['Manhattan', 'Violation 08A: Facility not vermin proof. Harborage or
+conditions conducive to attracting vermin to the premises and/or allowing vermin
+to exist.']: 4.5%
+ * ['Violation 10B: Plumbing not properly installed or maintained; anti-
+siphonage or backflow prevention device not provided where required; equipment
+or floor not properly drained; sewage disposal system in disrepair or not
+functioning properly.', 'Queens']: 1.3%
+ * ['American', "Violation 04L: Evidence of mice or live mice present in
+facility's food and/or non-food areas."]: 1.3%
+ * ['Brooklyn', 'American']: 4.1%
+ * ['American', 'Violation 08A: Facility not vermin proof. Harborage or
+conditions conducive to attracting vermin to the premises and/or allowing vermin
+to exist.']: 2.1%
+ * ['Brooklyn', 'Violation 06C: Food not protected from potential source of
+contamination during storage, preparation, transportation, display or
+service.']: 1.5%
+ * ['Violation 04N: Filth flies or food/refuse/sewage-associated (FRSA) flies
+present in facility’s food and/or non-food areas. Filth flies include house
+flies, little house flies, blow flies, bottle flies and flesh flies.
+Food/refuse/sewage-associated flies include fruit flies, drain flies and Phorid
+flies.', 'Queens']: 1.1%
+ * ['Manhattan', 'Violation 10F: Non-food contact surface improperly
+constructed. Unacceptable material used. Non-food contact surface or equipment
+improperly maintained and/or not properly sealed, raised, spaced or movable to
+allow accessibility for cleaning on all sides, above and underneath the unit.']:
+5.8%
+ * ['Brooklyn', 'Caribbean (Inc. Cuban, Puerto Rican)']: 1.7%
+ * ['Queens', 'Violation 02B: Hot food item not held at or above 140º F.']: 1.3%
+ * ['Manhattan', 'Mexican']: 1.2%
+ * ['Violation 06D: Food contact surface not properly washed, rinsed and
+sanitized after each use and following any activity when contamination may have
+occurred.', 'Queens']: 1.6%
+ * ['Violation 10F: Non-food contact surface improperly constructed.
+Unacceptable material used. Non-food contact surface or equipment improperly
+maintained and/or not properly sealed, raised, spaced or movable to allow
+accessibility for cleaning on all sides, above and underneath the unit.',
+'Queens']: 3.5%
+ * ['Violation 10F: Non-food contact surface improperly constructed.
+Unacceptable material used. Non-food contact surface or equipment improperly
+maintained and/or not properly sealed, raised, spaced or movable to allow
+accessibility for cleaning on all sides, above and underneath the unit.',
+'American']: 2.8%
+ * ['Brooklyn', 'Violation 10B: Plumbing not properly installed or maintained;
+anti-siphonage or backflow prevention device not provided where required;
+equipment or floor not properly drained; sewage disposal system in disrepair or
+not functioning properly.']: 1.4%
+ * ['Queens', 'Spanish']: 1.0%
+ * ['Brooklyn', 'Violation 04N: Filth flies or food/refuse/sewage-associated
+(FRSA) flies present in facility’s food and/or non-food areas. Filth flies
+include house flies, little house flies, blow flies, bottle flies and flesh
+flies. Food/refuse/sewage-associated flies include fruit flies, drain flies and
+Phorid flies.']: 1.2%
+ * ['Queens', 'Violation 06C: Food not protected from potential source of
+contamination during storage, preparation, transportation, display or
+service.']: 1.5%
+ * ['Manhattan', 'Violation 04N: Filth flies or food/refuse/sewage-associated
+(FRSA) flies present in facility’s food and/or non-food areas. Filth flies
+include house flies, little house flies, blow flies, bottle flies and flesh
+flies. Food/refuse/sewage-associated flies include fruit flies, drain flies and
+Phorid flies.']: 2.2%
+ * ['Manhattan', "Violation 04L: Evidence of mice or live mice present in
+facility's food and/or non-food areas."]: 2.9%
+ * ['Violation 10F: Non-food contact surface improperly constructed.
+Unacceptable material used. Non-food contact surface or equipment improperly
+maintained and/or not properly sealed, raised, spaced or movable to allow
+accessibility for cleaning on all sides, above and underneath the unit.',
+'Chinese']: 1.6%
+ * ['Chinese', 'Queens']: 3.5%
+ * ['Manhattan', 'Latin American (Central and South America)']: 1.0%
+ * ['Manhattan', 'Pizza']: 2.0%
+ * ['Manhattan', 'Violation 10B: Plumbing not properly installed or maintained;
+anti-siphonage or backflow prevention device not provided where required;
+equipment or floor not properly drained; sewage disposal system in disrepair or
+not functioning properly.']: 2.5%
+ * ['Violation 10F: Non-food contact surface improperly constructed.
+Unacceptable material used. Non-food contact surface or equipment improperly
+maintained and/or not properly sealed, raised, spaced or movable to allow
+accessibility for cleaning on all sides, above and underneath the unit.',
+'Brooklyn']: 3.8%
+ * ['Manhattan', 'Violation 06C: Food not protected from potential source of
+contamination during storage, preparation, transportation, display or
+service.']: 2.3%
+ * ['Violation 02G: Cold food item held above 41º F (smoked fish and reduced
+oxygen packaged foods above 38 ºF) except during necessary preparation.',
+'American']: 1.1%
+ * ['Manhattan', 'Violation 10F: Non-food contact surface improperly
+constructed. Unacceptable material used. Non-food contact surface or equipment
+improperly maintained and/or not properly sealed, raised, spaced or movable to
+allow accessibility for cleaning on all sides, above and underneath the unit.',
+'American']: 1.5%
+ * ['Manhattan', 'American', 'Violation 08A: Facility not vermin proof.
+Harborage or conditions conducive to attracting vermin to the premises and/or
+allowing vermin to exist.']: 1.1%
+***************************************************************************
+***************************************************************************
+               High-Confidence Association Rules Found (57):
+
+Association Rule #0
+* Rule: ['DUNKIN'] => ['Donuts']
+* Metrics: Conf: 97.8%, Sup: 1.0%
+
+Association Rule #1
+* Rule: ['Donuts'] => ['DUNKIN']
+* Metrics: Conf: 72.2%, Sup: 1.0%
+
+Association Rule #2
+* Rule: ['Italian'] => ['Manhattan']
+* Metrics: Conf: 60.6%, Sup: 2.4%
+
+Association Rule #3
+* Rule: ['Japanese'] => ['Manhattan']
+* Metrics: Conf: 55.7%, Sup: 2.0%
+
+Association Rule #4
+* Rule: ['Café/Coffee/Tea'] => ['Manhattan']
+* Metrics: Conf: 54.1%, Sup: 2.7%
+
+Association Rule #5
+* Rule: ['American', 'Violation 08A: Facility not vermin proof. Harborage or
+conditions conducive to attracting vermin to the premises and/or allowing vermin
+to exist.'] => ['Manhattan']
+* Metrics: Conf: 52.4%, Sup: 1.1%
+
+Association Rule #6
+* Rule: ['American'] => ['Manhattan']
+* Metrics: Conf: 52.3%, Sup: 9.7%
+
+Association Rule #7
+* Rule: ['Violation 10F: Non-food contact surface improperly constructed.
+Unacceptable material used. Non-food contact surface or equipment improperly
+maintained and/or not properly sealed, raised, spaced or movable to allow
+accessibility for cleaning on all sides, above and underneath the unit.',
+'American'] => ['Manhattan']
+* Metrics: Conf: 52.3%, Sup: 1.5%
+
+Association Rule #8
+* Rule: ['Caribbean (Inc. Cuban, Puerto Rican)'] => ['Brooklyn']
+* Metrics: Conf: 47.2%, Sup: 1.7%
+
+Association Rule #9
+* Rule: ['Sandwiches'] => ['Manhattan']
+* Metrics: Conf: 45.1%, Sup: 1.3%
+
+Association Rule #10
+* Rule: ['Violation 06D: Food contact surface not properly washed, rinsed and
+sanitized after each use and following any activity when contamination may have
+occurred.'] => ['Manhattan']
+* Metrics: Conf: 43.1%, Sup: 3.1%
+
+Association Rule #11
+* Rule: ['Violation 04N: Filth flies or food/refuse/sewage-associated (FRSA)
+flies present in facility’s food and/or non-food areas. Filth flies include
+house flies, little house flies, blow flies, bottle flies and flesh flies.
+Food/refuse/sewage-associated flies include fruit flies, drain flies and Phorid
+flies.'] => ['Manhattan']
+* Metrics: Conf: 43.0%, Sup: 2.2%
+
+Association Rule #12
+* Rule: ['Violation 02G: Cold food item held above 41º F (smoked fish and
+reduced oxygen packaged foods above 38 ºF) except during necessary
+preparation.'] => ['Manhattan']
+* Metrics: Conf: 41.7%, Sup: 2.5%
+
+Association Rule #13
+* Rule: ['Violation 10B: Plumbing not properly installed or maintained; anti-
+siphonage or backflow prevention device not provided where required; equipment
+or floor not properly drained; sewage disposal system in disrepair or not
+functioning properly.'] => ['Manhattan']
+* Metrics: Conf: 41.6%, Sup: 2.5%
+
+Association Rule #14
+* Rule: ['Violation 10F: Non-food contact surface improperly constructed.
+Unacceptable material used. Non-food contact surface or equipment improperly
+maintained and/or not properly sealed, raised, spaced or movable to allow
+accessibility for cleaning on all sides, above and underneath the unit.'] =>
+['Manhattan']
+* Metrics: Conf: 38.9%, Sup: 5.8%
+
+Association Rule #15
+* Rule: ['Violation 06C: Food not protected from potential source of
+contamination during storage, preparation, transportation, display or service.']
+=> ['Manhattan']
+* Metrics: Conf: 38.8%, Sup: 2.3%
+
+Association Rule #16
+* Rule: ['Violation 08A: Facility not vermin proof. Harborage or conditions
+conducive to attracting vermin to the premises and/or allowing vermin to
+exist.'] => ['Manhattan']
+* Metrics: Conf: 38.6%, Sup: 4.5%
+
+Association Rule #17
+* Rule: ['Latin American (Central and South America)'] => ['Queens']
+* Metrics: Conf: 38.2%, Sup: 1.7%
+
+Association Rule #18
+* Rule: ["Violation 04L: Evidence of mice or live mice present in facility's
+food and/or non-food areas."] => ['Manhattan']
+* Metrics: Conf: 36.7%, Sup: 2.9%
+
+Association Rule #19
+* Rule: ['Violation 02B: Hot food item not held at or above 140º F.'] =>
+['Manhattan']
+* Metrics: Conf: 35.3%, Sup: 1.9%
+
+Association Rule #20
+* Rule: ['Spanish'] => ['Queens']
+* Metrics: Conf: 34.3%, Sup: 1.0%
+
+Association Rule #21
+* Rule: ['Mexican'] => ['Manhattan']
+* Metrics: Conf: 32.0%, Sup: 1.2%
+
+Association Rule #22
+* Rule: ['Chinese'] => ['Queens']
+* Metrics: Conf: 31.6%, Sup: 3.5%
+
+Association Rule #23
+* Rule: ['Pizza'] => ['Manhattan']
+* Metrics: Conf: 31.0%, Sup: 2.0%
+
+Association Rule #24
+* Rule: ['Caribbean (Inc. Cuban, Puerto Rican)'] => ['Queens']
+* Metrics: Conf: 30.8%, Sup: 1.1%
+
+Association Rule #25
+* Rule: ['Chinese'] => ['Brooklyn']
+* Metrics: Conf: 29.9%, Sup: 3.3%
+
+Association Rule #26
+* Rule: ['Mexican'] => ['Brooklyn']
+* Metrics: Conf: 29.8%, Sup: 1.1%
+
+Association Rule #27
+* Rule: ['Café/Coffee/Tea'] => ['Brooklyn']
+* Metrics: Conf: 27.2%, Sup: 1.3%
+
+Association Rule #28
+* Rule: ["Violation 04L: Evidence of mice or live mice present in facility's
+food and/or non-food areas."] => ['Brooklyn']
+* Metrics: Conf: 26.9%, Sup: 2.1%
+
+Association Rule #29
+* Rule: ['Chinese'] => ['Manhattan']
+* Metrics: Conf: 25.7%, Sup: 2.9%
+
+Association Rule #30
+* Rule: ['Violation 10F: Non-food contact surface improperly constructed.
+Unacceptable material used. Non-food contact surface or equipment improperly
+maintained and/or not properly sealed, raised, spaced or movable to allow
+accessibility for cleaning on all sides, above and underneath the unit.'] =>
+['Brooklyn']
+* Metrics: Conf: 25.7%, Sup: 3.8%
+
+Association Rule #31
+* Rule: ['Violation 08A: Facility not vermin proof. Harborage or conditions
+conducive to attracting vermin to the premises and/or allowing vermin to
+exist.'] => ['Brooklyn']
+* Metrics: Conf: 25.7%, Sup: 3.0%
+
+Association Rule #32
+* Rule: ['Violation 02B: Hot food item not held at or above 140º F.'] =>
+['Brooklyn']
+* Metrics: Conf: 25.6%, Sup: 1.4%
+
+Association Rule #33
+* Rule: ['Pizza'] => ['Brooklyn']
+* Metrics: Conf: 25.3%, Sup: 1.6%
+
+Association Rule #34
+* Rule: ['Manhattan', 'Violation 10F: Non-food contact surface improperly
+constructed. Unacceptable material used. Non-food contact surface or equipment
+improperly maintained and/or not properly sealed, raised, spaced or movable to
+allow accessibility for cleaning on all sides, above and underneath the unit.']
+=> ['American']
+* Metrics: Conf: 25.3%, Sup: 1.5%
+
+Association Rule #35
+* Rule: ['Violation 06C: Food not protected from potential source of
+contamination during storage, preparation, transportation, display or service.']
+=> ['Brooklyn']
+* Metrics: Conf: 25.2%, Sup: 1.5%
+
+Association Rule #36
+* Rule: ['Manhattan'] => ['American']
+* Metrics: Conf: 25.0%, Sup: 9.7%
+
+Association Rule #37
+* Rule: ['Violation 06D: Food contact surface not properly washed, rinsed and
+sanitized after each use and following any activity when contamination may have
+occurred.'] => ['American']
+* Metrics: Conf: 24.8%, Sup: 1.8%
+
+Association Rule #38
+* Rule: ['Violation 06C: Food not protected from potential source of
+contamination during storage, preparation, transportation, display or service.']
+=> ['Queens']
+* Metrics: Conf: 24.8%, Sup: 1.5%
+
+Association Rule #39
+* Rule: ['Violation 02B: Hot food item not held at or above 140º F.'] =>
+['Queens']
+* Metrics: Conf: 24.6%, Sup: 1.3%
+
+Association Rule #40
+* Rule: ['Violation 02G: Cold food item held above 41º F (smoked fish and
+reduced oxygen packaged foods above 38 ºF) except during necessary
+preparation.'] => ['Brooklyn']
+* Metrics: Conf: 24.5%, Sup: 1.5%
+
+Association Rule #41
+* Rule: ['Manhattan', 'Violation 08A: Facility not vermin proof. Harborage or
+conditions conducive to attracting vermin to the premises and/or allowing vermin
+to exist.'] => ['American']
+* Metrics: Conf: 24.5%, Sup: 1.1%
+
+Association Rule #42
+* Rule: ['Violation 10B: Plumbing not properly installed or maintained; anti-
+siphonage or backflow prevention device not provided where required; equipment
+or floor not properly drained; sewage disposal system in disrepair or not
+functioning properly.'] => ['Brooklyn']
+* Metrics: Conf: 24.2%, Sup: 1.4%
+
+Association Rule #43
+* Rule: ["Violation 04L: Evidence of mice or live mice present in facility's
+food and/or non-food areas."] => ['Queens']
+* Metrics: Conf: 23.7%, Sup: 1.9%
+
+Association Rule #44
+* Rule: ['Violation 06D: Food contact surface not properly washed, rinsed and
+sanitized after each use and following any activity when contamination may have
+occurred.'] => ['Brooklyn']
+* Metrics: Conf: 23.5%, Sup: 1.7%
+
+Association Rule #45
+* Rule: ['Violation 04N: Filth flies or food/refuse/sewage-associated (FRSA)
+flies present in facility’s food and/or non-food areas. Filth flies include
+house flies, little house flies, blow flies, bottle flies and flesh flies.
+Food/refuse/sewage-associated flies include fruit flies, drain flies and Phorid
+flies.'] => ['Brooklyn']
+* Metrics: Conf: 23.4%, Sup: 1.2%
+
+Association Rule #46
+* Rule: ['Violation 10F: Non-food contact surface improperly constructed.
+Unacceptable material used. Non-food contact surface or equipment improperly
+maintained and/or not properly sealed, raised, spaced or movable to allow
+accessibility for cleaning on all sides, above and underneath the unit.'] =>
+['Queens']
+* Metrics: Conf: 23.1%, Sup: 3.5%
+
+Association Rule #47
+* Rule: ['Latin American (Central and South America)'] => ['Manhattan']
+* Metrics: Conf: 22.8%, Sup: 1.0%
+
+Association Rule #48
+* Rule: ['Violation 08A: Facility not vermin proof. Harborage or conditions
+conducive to attracting vermin to the premises and/or allowing vermin to
+exist.'] => ['Queens']
+* Metrics: Conf: 22.6%, Sup: 2.6%
+
+Association Rule #49
+* Rule: ['Pizza'] => ['Queens']
+* Metrics: Conf: 22.4%, Sup: 1.5%
+
+Association Rule #50
+* Rule: ['Violation 06D: Food contact surface not properly washed, rinsed and
+sanitized after each use and following any activity when contamination may have
+occurred.'] => ['Queens']
+* Metrics: Conf: 22.3%, Sup: 1.6%
+
+Association Rule #51
+* Rule: ['Violation 02G: Cold food item held above 41º F (smoked fish and
+reduced oxygen packaged foods above 38 ºF) except during necessary
+preparation.'] => ['Queens']
+* Metrics: Conf: 22.2%, Sup: 1.3%
+
+Association Rule #52
+* Rule: ['American'] => ['Brooklyn']
+* Metrics: Conf: 22.2%, Sup: 4.1%
+
+Association Rule #53
+* Rule: ['Violation 04N: Filth flies or food/refuse/sewage-associated (FRSA)
+flies present in facility’s food and/or non-food areas. Filth flies include
+house flies, little house flies, blow flies, bottle flies and flesh flies.
+Food/refuse/sewage-associated flies include fruit flies, drain flies and Phorid
+flies.'] => ['American']
+* Metrics: Conf: 21.8%, Sup: 1.1%
+
+Association Rule #54
+* Rule: ['Violation 10B: Plumbing not properly installed or maintained; anti-
+siphonage or backflow prevention device not provided where required; equipment
+or floor not properly drained; sewage disposal system in disrepair or not
+functioning properly.'] => ['Queens']
+* Metrics: Conf: 21.7%, Sup: 1.3%
+
+Association Rule #55
+* Rule: ['Violation 10B: Plumbing not properly installed or maintained; anti-
+siphonage or backflow prevention device not provided where required; equipment
+or floor not properly drained; sewage disposal system in disrepair or not
+functioning properly.'] => ['American']
+* Metrics: Conf: 21.1%, Sup: 1.3%
+
+Association Rule #56
+* Rule: ['Violation 04N: Filth flies or food/refuse/sewage-associated (FRSA)
+flies present in facility’s food and/or non-food areas. Filth flies include
+house flies, little house flies, blow flies, bottle flies and flesh flies.
+Food/refuse/sewage-associated flies include fruit flies, drain flies and Phorid
+flies.'] => ['Queens']
+* Metrics: Conf: 20.9%, Sup: 1.1%
+***************************************************************************
