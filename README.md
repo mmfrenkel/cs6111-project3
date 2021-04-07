@@ -122,7 +122,8 @@ itemsets at each iteration
 
 ### iv. Dependencies
 * `plumbum`: Library for supporting easy parsing of command line arguments
-* `black`: Style checking and bug finding tool
+* `black`: Style checking and bug finding tool (note that this can be installed via `pip3 install black`,
+but it is otherwise excluded from the `requirements.txt` file because it is not strictly necessary)
 * `pandas`: Enables easy conversion of .csv file containing data into a data frame format, which in 
 turn allows easy processing of the data 
 
