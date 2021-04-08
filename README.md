@@ -13,8 +13,9 @@ years (2018-2021). This dataset is updated automatically on a daily basis by the
 Mental Hygiene (DOHMH).
 
 The final, cleaned dataset that we used to generate association rules as part of this project can be found
-in `./project/data/restaurant_data_lim.csv`. Note that while we decided to use this specifc dataset, this program is
-written generically enough to handle any cleaned dataset in .csv format with comma-separated values.
+in `./project/data/restaurant_data_lim.csv`. Note that while we decided to use this specific dataset
+to generate our final association rules, our program is written generically enough to handle any 
+cleaned dataset in .csv format with comma-separated values.
 
 ## II. Design & Structure
 
@@ -27,8 +28,8 @@ The following list represents the steps, in order, that we took in cleaning the 
 in NYC (Staten Island, Manhattan, Queens, Brooklyn, Bronx), so every entry must contain one of this
 enumerated list of locations.
 2. Remove rows that are from inspections prior to 2018: The original dataset pulled from the NYC Open
-Data website contained 395K rows, far more than we needed for this analysis; hence, we narrowed the 
-dataset to this date range. This cleaning step included the removal of rows with inspection dates of 
+Data website contained 395K rows, far more than we needed for this analysis (and a larger file than 
+github allowed us to upload!). Hence, we narrowed the dataset to this date range. This cleaning step included the removal of rows with inspection dates of 
 1/1/1900, which represent the "dummy" value for new restaurants that have not yet received an inspection, 
 but which are still included in the  dataset.
 3. Bucket values: Because the dataset includes a number of columns with numeric values, we decided to "bucket" the
@@ -43,53 +44,53 @@ not entirely clear, including merging violation code with violation description 
 5. Remove columns that contain duplicate information/identifiers: The original dataset was
  not fully normalized; for example, the dataset included a unique DOHMH identifier for the restaurant as 
  well as the restaurant's name. If we ran the association rules program on this data, we would almost
- certainly get the uninteresting result that a restaurant's DOHMH identifier implies the restaurant name. 
+ certainly get the uninteresting result that a restaurant's DOHMH identifier implied the restaurant name. 
  The same is true for the violation code/description and zipcode/borough. Hence, we decided to remove
  columns that did not provide any new information. 
-6. Remove unhelpful columns: We removed any columns that contained information that was either (a) incomplete or 
+6. Remove unhelpful columns: We also removed any columns that contained information that was either (a) incomplete or 
 (b) did not contain a diverse set of information. For example, the `GRADE` column of the original dataset
 was incomplete; since we were more interested in the relationship between borough/restaurant/cuisine and 
 violations, and not in the final grade, we were comfortable removing this column. As another example,
-consider the `ACTION` and `INSPECTION TYPE` columns: there were only a few, limited options for these
-values and most of the rows had the same value. This meant that association rules were inevitably going
-to be generated, despite the fact that they would not likely be interesting results. As a result you
+consider the `ACTION` and `INSPECTION TYPE` columns. There were only a few, limited options for these
+values and most of the rows had the same value. This meant that these "items" would inevitably 
+result in association rules, despite the fact that they would not likely be interesting results. As a result you
 can see several iterations of the dataset in `/project3/data/` that reflect our iterations of cleaning
-and simplifying the data over time.
+and simplifying the data over time for this reason.
 
-Note: A subset of explicit cleaning steps outlined above is available here: `/project3/data/data_clean_up_restaurants.sql`. 
+Note: A subset of explicit cleaning steps outlined above is also available here: `/project3/data/data_clean_up_restaurants.sql`. 
 
 ### ii. Internal Design 
 
-Users interact with our program through the "cli layer", which acts as a user-friendly wrapper for 
+Users interact with our program through the "cli layer", which serves as a user-friendly wrapper for 
 the underlying `DataMiner` class. The cli layer is able to perform some rudimentary validation on the 
 parameters to the program and provide some helpful suggestions for how to use the tool. The cli 
 layer is also responsible for handling I/O (reading in files and printing out results to the user).
 See section **V. Run** to see more information on how users interact with the cli layer.
 
-Once a path to a valid `.csv` is obtained, the cli layer read in the specified .csv file as a pandas 
+Once a path to a valid `.csv` is obtained, the cli layer reads in the specified .csv file as a pandas 
 dataframe and passes it, along with the minimum support and confidence specifications, to an instance of 
 the `DataMiner` class. The `DataMiner` instance is then called upon to generate the large itemsets 
 for the data just the minimum support (`min_supp`) provided as a support threshold.
 
 In order to generate large itemsets, the `DataMiner` uses the a-priori algorithm outlined in Section 2.1.1
 Agrawal and Srikant (1994). The algorithm proceeds as follows:
-1. Determine large 1-itemsets (k = 1, i.e., the first pass through the data) by looking at each 
+1. Determine large 1-itemsets (k = 1, the first pass through the data) by looking at each 
 individual item, counting the number of occurrences, and keeping only items with 
 support >= min_supp.
 2. For each future iteration (k > 1), the pass occurs in two phases:
-    1. Determine the candidate k-itemsets via the `DataMiner` class' `_apriori_gen` function. This function
+    1. Determine the candidate k-itemsets via the `DataMiner` class' `_apriori_gen()` function. This function
     itself has two primary steps. In the `join` step, the large (k-1)-itemsets are joined with itself
     in a SQL-like fashion to generate candidates. Then, in the `prune` step, any candidates that have 
-    a subset that is not large are removed. This utilizes the key, basic intuition behind the a-priori
-    algorithm that any subset of a large itemset must also be large.
-    2. Determine which of the candidate k-itemsets are "large" by scanning the database to determine
+    a subset that was not in the large (k-1)-itemsets are removed. This utilizes the key, basic intuition 
+    behind the a-priori algorithm that any subset of a large itemset must also be large.
+    2. Determine which of the pruned, candidate k-itemsets are "large" by scanning the database to determine
     the support for each candidate. Note that we did not implement the subset function from Section
     2.1.1 of Agrawal and Srikant (1994) and instead use a simpler approach of comparing elements within 
      each transaction with the candidate itemset contents. Only candidate k-itemsets that reach the
      support threshold are kept around to serve as the "seed" for the next itemset iteration.
 3. Through each iteration, a dictionary mapping larget itemsets to count in the database is updated. This allows
- the support for each large itemset to be stored for the next step of data processing, the generation
- of assocation rules.
+ the support for each large itemset to be easily calculated in the next step of processing, the generation
+ of association rules.
 4. Once there are no more large itemsets to consider, the loop stops and all large itemsets are returned.
    
 Once the large itemsets are generated and returned back to the cli layer to be printed to the user,
@@ -165,8 +166,8 @@ Where `[SWITCHES]` correspond to the following **optional** command line argumen
 By default, the program will run with the data and parameters we have preset (i.e., the default data 
 is our cleaned restaurant dataset and a support of `0.1` and confidence of `0.2` are used).
 
-**Note**: Depending on the size of the dataset, the association rule generation can take some time.
-The default dataset completes in 5-10 minutes.
+**Note**: Depending on the size of the dataset and minimum support specified, the large itemset 
+generation can take some time. The default dataset completes in 5-10 minutes.
 
 ## VI. Results
 
@@ -183,8 +184,8 @@ one cuisine commonly associated with restaurant violations: American food.
 For example, consider the results below, which suggest that there is a relationship between 
 American restaurants in Manhattan and violation 10F. Less specific to Manhattan restaurants, 
 it also appears that there is a relationship between American restaurants and and violations 06D,
-08A, 04N. These violations represent contamination, vermin, and flies respectively. It is
-interesting that American food is the only cuisine specifically associated with violations.
+08A, 04N. These violations represent contamination, vermin, and flies respectively -- something to 
+consider before visiting an American food restaurant in NYC!
 ```
 Association Rule #7
 * Rule: ['American', 'Violation 10F: Non-food contact surface improperly
@@ -247,12 +248,12 @@ food and/or non-food areas."] => ['Queens']
 ##### Other Comments
 
 Alongside these interesting results, our program also generates a series of high confidence 
-association rules that are not interesting and insightful; for example `DUNKIN => Donuts` (most
-people know that DUNKINs serves donuts already.
+association rules that are not as interesting and insightful. For example, we generated the
+ association rule`DUNKIN => Donuts`. Most people know that DUNKINs serves donuts already.
 
 This demonstrates how although programs can be written to generate association rules, human 
-judgements and knowledge of the relevant domain of the dataset are required to pick out the 
-interesting association rule.
+judgements and knowledge of the relevant domain of the dataset are still required to pick out the 
+interesting association rules.
 
 ## VII. Credits
 
